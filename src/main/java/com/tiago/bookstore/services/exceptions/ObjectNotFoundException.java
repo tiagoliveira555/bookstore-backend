@@ -1,4 +1,4 @@
-package com.tiago.bookstore.exceptions;
+package com.tiago.bookstore.services.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException{
 
