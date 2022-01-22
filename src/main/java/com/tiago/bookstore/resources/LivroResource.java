@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +35,17 @@ public class LivroResource {
 		List<Livro> list = service.findAll(id_cat);
 		List<LivroDTO> listDTO = list.stream().map(x -> new LivroDTO(x)).toList();
 		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Livro> update(@PathVariable Integer id, @RequestBody Livro livro) {
+		Livro newLivro = service.update(id, livro);
+		return ResponseEntity.ok().body(newLivro);
+	}
+	
+	@PatchMapping(value = "/{id}")
+	public ResponseEntity<Livro> updatePatch(@PathVariable Integer id, @RequestBody Livro livro) {
+		Livro newLivro = service.update(id, livro);
+		return ResponseEntity.ok().body(newLivro);
 	}
 }
