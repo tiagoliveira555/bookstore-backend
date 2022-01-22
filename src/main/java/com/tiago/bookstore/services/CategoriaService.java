@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tiago.bookstore.domain.Categoria;
+import com.tiago.bookstore.dtos.CategoriaDTO;
 import com.tiago.bookstore.exceptions.ObjectNotFoundException;
 import com.tiago.bookstore.repositories.CategoriaRepository;
 
@@ -21,13 +22,21 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + " , Tipo: " + Categoria.class.getName()));
 	}
-	
+
 	public List<Categoria> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public Categoria create(Categoria obj) {
 		obj.setId(null);
 		return repository.save(obj);
+	}
+
+	public Categoria update(Integer id, CategoriaDTO objDTO) {
+		Categoria obj = findById(id);
+		obj.setNome(objDTO.getNome());
+		obj.setDescricao(objDTO.getDescricao());
+		return repository.save(obj);
+
 	}
 }
